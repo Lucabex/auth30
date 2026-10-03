@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using auth30.Context;
 using auth30.Services;
+using Scalar.AspNetCore;
 
 
 
@@ -38,7 +39,7 @@ builder.Services.AddAuthentication(options =>
     
 });
 builder.Services.AddAuthorization();
-builder.Services.AddScoped<JwtServices>();
+builder.Services.AddScoped<JwtService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("react", policy =>
@@ -53,6 +54,8 @@ var app =builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.MapOpenApi();
+    app.MapScalarApiReference();
     
 };
 app.UseCors("react");
